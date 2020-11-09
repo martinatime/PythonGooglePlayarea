@@ -5,7 +5,12 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 
-SCOPES = ['https://www.googleapis.com/auth/gmail.labels', 'https://www.googleapis.com/auth/gmail.readonly', 'https://www.googleapis.com/auth/gmail.settings.basic', 'https://www.googleapis.com/auth/spreadsheets']
+SCOPES = ['https://www.googleapis.com/auth/gmail.labels',
+'https://www.googleapis.com/auth/gmail.readonly',
+'https://www.googleapis.com/auth/gmail.settings.basic',
+'https://www.googleapis.com/auth/spreadsheets',
+'https://www.googleapis.com/auth/tasks',
+'https://www.googleapis.com/auth/drive']
 
 SPREADSHEET_NAME = 'EmailProcessing'
 
@@ -34,7 +39,7 @@ class GoogleServicesConnector():
             with open('token.pickle', 'wb') as token:
                 pickle.dump(self.creds, token)
 
-    def getGoogleDocsService(self):
+    def getGoogleDriveService(self):
         return build('drive', 'v3', credentials=self.creds)
 
     def getGoogleSheetsService(self):
@@ -42,3 +47,6 @@ class GoogleServicesConnector():
 
     def getGoogleMailService(self):
         return build('gmail', 'v1', credentials=self.creds)
+
+    def getGoogleTasksService(self):
+        return build('tasks', 'v1', credentials=self.creds)
